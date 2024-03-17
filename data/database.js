@@ -10,7 +10,7 @@ let database; // This is the database as a whole;
 const initDb = (callback) => {
   // check if the database is already initialised
   if (database) {
-    consolo.log("Database is already initialised");
+    console.log("Database is already initialised");
     return callback(null, database);
   }
   mongoClient
