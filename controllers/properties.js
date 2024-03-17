@@ -3,6 +3,7 @@ const mongodb = require("../data/database");
 const ObjectId = require("mongodb").ObjectId;
 
 const getAllProperties = async (req, res) => {
+    // #swagger.tags = ['Properties']
   const result = await mongodb
     .getDatabase()
     .db()
@@ -16,6 +17,8 @@ const getAllProperties = async (req, res) => {
 };
 
 const getSingleProperty = async (req, res) => {
+    // #swagger.tags = ['Properties']
+
   const propertyId = new ObjectId(req.params.id);
   const singleProperty = await mongodb
     .getDatabase()
@@ -31,6 +34,8 @@ const getSingleProperty = async (req, res) => {
 };
 
 const createProperties = async (req, res) => {
+    // #swagger.tags = ['Properties']
+
   console.log("am here");
   property = {
     title: req.body.title,
@@ -61,6 +66,8 @@ const createProperties = async (req, res) => {
 };
 
 const deleteSingleProperty = async (req, res) => {
+    // #swagger.tags = ['Properties']
+
   const propertyId = new ObjectId(req.params.id);
   const response = await mongodb
     .getDatabase()
@@ -80,6 +87,8 @@ const deleteSingleProperty = async (req, res) => {
 };
 
 const updateProperty = async (req, res) => {
+    // #swagger.tags = ['Properties']
+
   if (mongoose.isValidObjectId(req.params.id) === false)
   {
    return res.status(400).send("Bad objectId")

@@ -3,6 +3,9 @@ const mongodb = require("../data/database");
 const ObjectId = require("mongodb").ObjectId;
 
 const getAllUsers = async (req, res) => {
+      // #swagger.tags = ['Users']
+       // #swagger.summary = Get all the users from the rental api
+       // #swagger.description = 'When called, all the users will be retrived'
   const result = await mongodb
     .getDatabase()
     .db()
@@ -16,6 +19,8 @@ const getAllUsers = async (req, res) => {
 };
 
 const getSingleUser = async (req, res) => {
+    // #swagger.tags = ['Users']
+
   const userId = new ObjectId(req.params.id);
   const singleUser = await mongodb
     .getDatabase()
@@ -31,6 +36,7 @@ const getSingleUser = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
+    // #swagger.tags = ['Users']
   console.log("am here");
   user = {
     name: req.body.name,
@@ -54,6 +60,7 @@ const createUser = async (req, res) => {
 };
 
 const deleteSingleUser = async (req, res) => {
+    // #swagger.tags = ['Users']
   const userId = new ObjectId(req.params.id);
   const response = await mongodb
     .getDatabase()
@@ -73,6 +80,7 @@ const deleteSingleUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
+    // #swagger.tags = ['Users']
   if (mongoose.isValidObjectId(req.params.id) === false)
   {
    return res.status(400).send("Bad objectId")
