@@ -1,9 +1,23 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 const mongodb = require("../data/database");
 const ObjectId = require("mongodb").ObjectId;
+const joi = require("joi");
+const  validateFun =  require("../schemas");
+
+const propertySchema = joi.object({
+  title: joi.string().lowercase().length(30).required(),
+  description: joi.string().lowercase().required(),
+  address: joi.string().lowercase().required(),
+  city: joi.string().lowercase().required(),
+  state: joi.string().lowercase().required(),
+  price: joi.number().min(5).required(),
+  bedrooms: joi.number().min(1),
+  bathrooms: joi.number().min(1).required(),
+  size: joi.number().min(1).required(),
+});
 
 const getAllProperties = async (req, res) => {
-    // #swagger.tags = ['Properties']
+  // #swagger.tags = ['Properties']
   const result = await mongodb
     .getDatabase()
     .db()
@@ -17,8 +31,11 @@ const getAllProperties = async (req, res) => {
 };
 
 const getSingleProperty = async (req, res) => {
-    // #swagger.tags = ['Properties']
+  // #swagger.tags = ['Properties']
 
+  if (mongoose.isValidObjectId(req.params.id) === false) {
+    return res.status(400).send("Bad objectId");
+  }
   const propertyId = new ObjectId(req.params.id);
   const singleProperty = await mongodb
     .getDatabase()
@@ -34,28 +51,20 @@ const getSingleProperty = async (req, res) => {
 };
 
 const createProperties = async (req, res) => {
-    // #swagger.tags = ['Properties']
+  // #swagger.tags = ['Properties']
 
-  console.log("am here");
-  property = {
-    title: req.body.title,
-    description: req.body.description,
-    address: req.body.address,
-    city: req.body.city,
-    state: req.body.state,
-    price: req.body.price,
-    bedrooms: req.body.bedrooms,
-    bathrooms: req.body.bathrooms,
-    size: req.body.size,
-    amenities: [],
+  
 
-    images: [],
-  };
+  const { error, value } = validateFun.validate(propertySchema, req.body);
+  if (error) {
+    return res.status(400).json(error.details);
+  }
+
   const response = await mongodb
     .getDatabase()
     .db()
     .collection("properties")
-    .insertOne(property);
+    .insertOne(value);
   if (response.acknowledged) {
     res.status(204).send();
   } else {
@@ -66,8 +75,10 @@ const createProperties = async (req, res) => {
 };
 
 const deleteSingleProperty = async (req, res) => {
-    // #swagger.tags = ['Properties']
-
+  // #swagger.tags = ['Properties']
+  if (mongoose.isValidObjectId(req.params.id) === false) {
+    return res.status(400).send("Bad objectId");
+  }
   const propertyId = new ObjectId(req.params.id);
   const response = await mongodb
     .getDatabase()
@@ -87,17 +98,14 @@ const deleteSingleProperty = async (req, res) => {
 };
 
 const updateProperty = async (req, res) => {
-    // #swagger.tags = ['Properties']
+  // #swagger.tags = ['Properties']
 
-  if (mongoose.isValidObjectId(req.params.id) === false)
-  {
-   return res.status(400).send("Bad objectId")
-   
-
+  if (mongoose.isValidObjectId(req.params.id) === false) {
+    return res.status(400).send("Bad objectId");
   }
   const id = new ObjectId(req.params.id);
 
-     property = {
+  property = {
     title: req.body.title,
     description: req.body.description,
     address: req.body.address,
@@ -110,8 +118,8 @@ const updateProperty = async (req, res) => {
     amenities: [],
 
     images: [],
-    };
-   
+  };
+
   const response = await mongodb
     .getDatabase()
     .db()
