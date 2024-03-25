@@ -5,11 +5,9 @@
     "description": "This application stores landlords, users and properties for a rental project",
     "version": "1.0.0"
   },
-  "host": "rental-project-vfr6.onrender.com/",
+  "host": "rental-project-vfr6.onrender.com",
   "basePath": "/",
-  "schemes": [
-    "https"
-  ],
+  "schemes": ["https"],
   "paths": {
     "/login": {
       "get": {
@@ -33,14 +31,10 @@
     },
     "/users/": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get all the users from the rental api",
         "description": "When called, all the users will be retrived",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK"
@@ -48,9 +42,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "description": "",
         "responses": {
           "200": {
@@ -70,13 +62,9 @@
     },
     "/users/{id}": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -95,9 +83,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "description": "",
         "parameters": [
           {
@@ -123,9 +109,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "description": "",
         "parameters": [
           {
@@ -163,13 +147,9 @@
     },
     "/properties/": {
       "get": {
-        "tags": [
-          "Properties"
-        ],
+        "tags": ["Properties"],
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK"
@@ -177,9 +157,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Properties"
-        ],
+        "tags": ["Properties"],
         "description": "",
         "responses": {
           "200": {
@@ -199,13 +177,9 @@
     },
     "/properties/{id}": {
       "get": {
-        "tags": [
-          "Properties"
-        ],
+        "tags": ["Properties"],
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -224,9 +198,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Properties"
-        ],
+        "tags": ["Properties"],
         "description": "",
         "parameters": [
           {
@@ -288,9 +260,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Properties"
-        ],
+        "tags": ["Properties"],
         "description": "",
         "parameters": [
           {
@@ -319,9 +289,7 @@
     "/landlords/": {
       "get": {
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK"
@@ -349,9 +317,7 @@
     "/landlords/{id}": {
       "get": {
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -424,8 +390,5 @@
       }
     }
   },
-  "schema": [
-    "https",
-    "http"
-  ]
+  "schema": ["https", "http"]
 }
