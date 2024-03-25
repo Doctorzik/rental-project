@@ -9,7 +9,7 @@
   "basePath": "/",
   "schemes": ["https"],
   "paths": {
-    "/login": {
+    "login": {
       "get": {
         "description": "",
         "responses": {
@@ -19,7 +19,7 @@
         }
       }
     },
-    "/logout": {
+    "logout": {
       "get": {
         "description": "",
         "responses": {
@@ -29,7 +29,7 @@
         }
       }
     },
-    "/users/": {
+    "users/": {
       "get": {
         "tags": ["Users"],
         "summary": "Get all the users from the rental api",
@@ -60,7 +60,7 @@
         }
       }
     },
-    "/users/{id}": {
+    "users/{id}": {
       "get": {
         "tags": ["Users"],
         "description": "",
@@ -145,7 +145,7 @@
         }
       }
     },
-    "/properties/": {
+    "properties/": {
       "get": {
         "tags": ["Properties"],
         "description": "",
@@ -175,7 +175,7 @@
         }
       }
     },
-    "/properties/{id}": {
+    "properties/{id}": {
       "get": {
         "tags": ["Properties"],
         "description": "",
