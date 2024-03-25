@@ -26,7 +26,7 @@ const getAllLandlords = async (req, res) => {
 
 const getSingleLandlord = async (req, res) => {
   if (mongoose.isValidObjectId(req.params.id) === false) {
-    return res.status(400).send("Bad objectId");
+    return res.status(400).json("Bad objectId");
   }
 
   const landlordId = new ObjectId(req.params.id);
@@ -37,6 +37,9 @@ const getSingleLandlord = async (req, res) => {
     .find({ _id: landlordId });
 
   singleLandlord.toArray().then((landlord) => {
+    if ((landlord = [])) {
+      return res.status(400).send("No landlord with  the provided id");
+    }
     res.setHeader("Content-Type", "application/json");
     res.status(200);
     res.json(landlord);
@@ -48,7 +51,6 @@ const createLandlord = async (req, res) => {
   if (error) {
     return res.status(400).json(error.details);
   }
-
 
   const response = await mongodb
     .getDatabase()
@@ -65,17 +67,17 @@ const createLandlord = async (req, res) => {
 };
 
 const deleteSingleLandlord = async (req, res) => {
-
   if (mongoose.isValidObjectId(req.params.id) === false) {
     return res.status(400).send("Bad objectId");
   }
   const landLordId = new ObjectId(req.params.id);
+
   const response = await mongodb
     .getDatabase()
     .db()
-    .collection("properties")
+    .collection("landlords")
     .deleteOne({ _id: landLordId });
-  console.log({ response });
+
   if (response.acknowledged && response.deletedCount > 0) {
     res
       .status(204)
@@ -92,32 +94,29 @@ const updateLandlord = async (req, res) => {
     return res.status(400).send("Bad objectId");
   }
 
-  const { error, value } = validateFun.validate(propertySchema, req.body);
+  const { error, value } = validateFun.validate(landLordSchema, req.body);
   if (error) {
     return res.status(400).json(error.details);
   }
 
   const id = new ObjectId(req.params.id);
 
-  landlord = {
-    name: req.body.name,
-    phoneNumber: req.body.phoneNumber,
-    email: req.body.email,
-    address: req.body.address,
-  };
+  try {
+    // Update the landlord in the database
+    const response = await mongodb
+      .getDatabase()
+      .db()
+      .collection("landlords")
+      .replaceOne({ _id: id }, value);
 
-  const response = await mongodb
-    .getDatabase()
-    .db()
-    .collection("properties")
-    .replaceOne({ _id: id }, value);
-
-  if (response.modifiedCount > 0) {
-    res.status(204).send();
-  } else {
-    res
-      .status(500)
-      .json(response.error || "Some error occured while deleting the property");
+    // Check if the landlord was successfully updated
+    if (response.modifiedCount > 0) {
+      return res.status(204).send(); // Send success response
+    } else {
+      return res.status(404).json("Landlord not found"); // Landlord not found
+    }
+  } catch (error) {
+    return res.status(500).json("Error occurred while updating landlord"); // Server error
   }
 };
 module.exports = {

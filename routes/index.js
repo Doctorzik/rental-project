@@ -1,14 +1,24 @@
+const { func } = require("joi");
+const passport = require("passport");
+
 const router = require("express").Router();
+router.use("/users", require("./users"));
 
+router.get("/login", passport.authenticate("github"), (req, res) => { });
 router.use("/", require("./swagger"));
-router.get("/", (req, res) => res.send("Hello World"));
 
- // #swagger.tags = ['Hello World']
+// #swagger.tags = ['Hello World']
 
 router.use("/properties", require("./properties"));
-router.use("/landlords", require("./landlords"))
- 
-router.use("/users", require("./users"))
+router.use("/landlords", require("./landlords"));
 
+
+
+router.get("/logout", function( req, res, next) {
+    req.logout(function(err) {
+        if(err){ next(err)}
+        res.redirect("/")
+    })
+})
 
 module.exports = router;

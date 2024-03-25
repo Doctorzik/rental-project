@@ -6,6 +6,7 @@ const validateFun = require("../schemas")
 
 
 
+
 const userSchema = joi.object({
   name: joi.string().min(3).max(30).lowercase().required(),
   phone: joi.number().required(),
