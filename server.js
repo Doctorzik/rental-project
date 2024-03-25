@@ -13,7 +13,7 @@ const port = process.env.PORT || 4000;
 app.use(bodyParser.json());
 app.use(
   session({
-    secret: "secret",
+    secret: "ca717f96d9b9911cf339",
     resave: false,
     saveUninitialized: true,
   })
@@ -81,7 +81,7 @@ app.get(
   passport.authenticate("github", { failureRedirect: "/api-docs" }),
   function (req, res) {
     req.session.user = req.user;
-    console.log(req.user);
+    console.log(req.user)
     // Successful authentication, redirect home.
     res.redirect("/");
   }
