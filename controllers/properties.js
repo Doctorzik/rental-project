@@ -105,26 +105,17 @@ const updateProperty = async (req, res) => {
   }
   const id = new ObjectId(req.params.id);
 
-  property = {
-    title: req.body.title,
-    description: req.body.description,
-    address: req.body.address,
-    city: req.body.city,
-    state: req.body.state,
-    price: req.body.price,
-    bedrooms: req.body.bedrooms,
-    bathrooms: req.body.bathrooms,
-    size: req.body.size,
-    amenities: [],
+  const { error, value } = validateFun.validate(propertySchema, req.body);
+  if (error) {
+    return res.status(400).json(error.details);
+  }
 
-    images: [],
-  };
 
   const response = await mongodb
     .getDatabase()
     .db()
     .collection("properties")
-    .replaceOne({ _id: id }, property);
+    .replaceOne({ _id: id }, value);
 
   if (response.modifiedCount > 0) {
     res.status(204).send();
