@@ -32,7 +32,9 @@ const getAllProperties = async (req, res) => {
 
 const getSingleProperty = async (req, res) => {
   // #swagger.tags = ['Properties']
-
+  if(req.params.id === null) {
+    return res.status(400).send("Please Provide a valid an Id to get the single value");
+  }
   if (mongoose.isValidObjectId(req.params.id) === false) {
     return res.status(400).send("Bad objectId");
   }
