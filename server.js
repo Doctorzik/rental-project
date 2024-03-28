@@ -81,7 +81,7 @@ app.get(
   passport.authenticate("github", { failureRedirect: "/api-docs" }),
   function (req, res) {
     req.session.user = req.user;
-    
+
     // Successful authentication, redirect home.
     res.redirect("/");
   }
