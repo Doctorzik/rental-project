@@ -43,7 +43,7 @@ app.use(
 );
 app.use(cors({ origin: "*" }));
 
-app.use("/", require("./routes"));
+app.use("/", require("./routes/index.js"));
 
 passport.use(
   new githubStrategy(

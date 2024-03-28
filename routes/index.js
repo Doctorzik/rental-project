@@ -2,9 +2,11 @@ const { func } = require("joi");
 const passport = require("passport");
 
 const router = require("express").Router();
-router.use("/users", require("./users"));
 
 router.use("/", require("./swagger"));
+
+router.use("/users", require("./users"));
+
 
 // #swagger.tags = ['Hello World']
 
