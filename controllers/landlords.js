@@ -37,7 +37,8 @@ const getSingleLandlord = async (req, res) => {
     .find({ _id: landlordId });
 
   singleLandlord.toArray().then((landlord) => {
-    if ((landlord = [])) {
+    
+    if ((landlord.length == 0)) {
       return res.status(400).send("No landlord with  the provided id");
     }
     res.setHeader("Content-Type", "application/json");

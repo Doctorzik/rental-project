@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 const mongodb = require("../data/database");
 const ObjectId = require("mongodb").ObjectId;
 const joi = require("joi");
-const  validateFun =  require("../schemas");
+ 
+
+
+      
+const validateFun = require("../schemas");
 
 const propertySchema = joi.object({
   title: joi.string().lowercase().length(30).required(),
@@ -31,10 +35,10 @@ const getAllProperties = async (req, res) => {
 };
 
 const getSingleProperty = async (req, res) => {
+  console.log(req.params)
+
   // #swagger.tags = ['Properties']
-  if(req.params.id === null) {
-    return res.status(400).send("Please Provide a valid an Id to get the single value");
-  }
+
   if (mongoose.isValidObjectId(req.params.id) === false) {
     return res.status(400).send("Bad objectId");
   }
@@ -46,6 +50,10 @@ const getSingleProperty = async (req, res) => {
     .find({ _id: propertyId });
 
   singleProperty.toArray().then((properties) => {
+     
+    if ((properties.length == 0)) {
+      return res.status(400).send("No properties with  the provided id");
+    }
     res.setHeader("Content-Type", "application/json");
     res.status(200);
     res.json(properties);
@@ -54,8 +62,6 @@ const getSingleProperty = async (req, res) => {
 
 const createProperties = async (req, res) => {
   // #swagger.tags = ['Properties']
-
-  
 
   const { error, value } = validateFun.validate(propertySchema, req.body);
   if (error) {
@@ -111,7 +117,6 @@ const updateProperty = async (req, res) => {
   if (error) {
     return res.status(400).json(error.details);
   }
-
 
   const response = await mongodb
     .getDatabase()

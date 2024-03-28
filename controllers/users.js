@@ -45,6 +45,10 @@ const getSingleUser = async (req, res) => {
     .find({ _id: userId });
 
   singleUser.toArray().then((user) => {
+     
+    if ((user.length == 0)) {
+      return res.status(400).send("No Users with  the provided id");
+    }
     res.setHeader("Content-Type", "application/json");
     res.status(200);
     res.json(user);
