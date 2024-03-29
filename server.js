@@ -5,7 +5,7 @@ const passport = require("passport");
 const session = require("express-session");
 const githubStrategy = require("passport-github2").Strategy;
 const cors = require("cors");
-const dotenv = require("dotenv")
+const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
 
@@ -28,12 +28,12 @@ app.use(passport.session());
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
-    "Access-Control-Origin",
-    "Origin, x-Requested-With, Content-Type, Accept, Accept z-key"
+    "Access-Control-Headers",
+    "Origin, x-Requested-With, Content-Type, Accept, Accept z-key, Authorization"
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, OPTIONS"
+    "POST, GET, PUT, PATCH,  OPTIONS, DELETE"
   );
   next(); // Tells the app to go to the next middleware.
 });
