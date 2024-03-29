@@ -8,7 +8,17 @@
   "host": "rental-project-vfr6.onrender.com",
   "basePath": "/",
   "schemes": ["https"],
-  "paths": { 
+  "paths": {
+    "/api-docs": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/users/": {
       "get": {
         "tags": ["Users"],
@@ -111,16 +121,6 @@
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/api-docs": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
           }
         }
       }
