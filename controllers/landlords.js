@@ -68,6 +68,7 @@ const createLandlord = async (req, res) => {
 };
 
 const deleteSingleLandlord = async (req, res) => {
+  
   if (mongoose.isValidObjectId(req.params.id) === false) {
     return res.status(400).send("Bad objectId");
   }
