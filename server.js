@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 
 const port = process.env.PORT || 4000;
-
+ 
 app.use(bodyParser.json());
 app.use(
   session({
@@ -54,13 +54,14 @@ passport.use(
       callbackURL: process.env.callbackURL,
     },
     function (accessToken, refreshToken, profile, done) {
+      console.log(profile)
       // User.findOrCreate({ githubId: profile.id }, function (err, user) {
       return done(null, profile);
-      // });
+      // }); 
     }
   )
 );
-
+ 
 passport.serializeUser((user, done) => {
   done(null, user);
 });
@@ -98,3 +99,4 @@ mongodb.initDb((err) => {
     );
   }
 });
+   

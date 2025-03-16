@@ -7,7 +7,7 @@ router.use("/", require("./swagger"));
 
 router.use("/users", require("./users"));
 
-
+  
 // #swagger.tags = ['Hello World']
 
 router.use("/properties", require("./properties"));
